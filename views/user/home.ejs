@@ -1,0 +1,118 @@
+<section class="main pt-0">
+  <div class="main-img">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="2000">
+          <img src="https://i.ibb.co/5YY8TZk/home1.jpg" class="d-block w-100" alt="...">
+          <h1>WELCOME</h1>
+          <h3>TO OUR LUXURIOUS HOTEL</h3>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="https://i.ibb.co/X8SjXYQ/home2.jpg" class="d-block w-100" alt="...">
+          <h1>WELCOME</h1>
+          <h3>TO OUR LUXURIOUS HOTEL</h3>
+        </div>
+        <div class="carousel-item" data-bs-interval="2000">
+          <img src="https://i.ibb.co/VD2QxZX/home3.jpg" class="d-block w-100" alt="...">
+          <h1>WELCOME</h1>
+          <h3>TO OUR LUXURIOUS HOTEL</h3>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+<br><br><br><br>
+<section class="service">
+  <div class="pt-5 pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="section-head col-sm-12">
+          <h4><span>OUR SERVICES</span></h4>
+        
+            
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati nobis sequi, velit, quasi voluptatem vitae, itaque delectus assumenda quisquam sit quae numquam amet rem? Omnis nesciunt magnam suscipit hic iste?</p>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_one"><i class="fa-solid fa-dumbbell"></i></span>
+            <h6>GYM</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_two"><i class="fa-solid fa-utensils"></i></span>
+            <h6>Restaurant</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_three"><i class="fa-solid fa-wifi"></i></span>
+            <h6>WIFI</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_four"><i class="fa-solid fa-person-swimming"></i></span>
+            <h6>SWIMING POOL</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_five"><i class="fa-solid fa-martini-glass"></i></span>
+            <h6>BAR & DRINK</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+          <div class="item">
+            <span class="icon feature_box_col_six"><i class="fa-solid fa-taxi"></i></span>
+            <h6>TAXI</h6>
+            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maxime sed, recusandae </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="reviews">
+  <div class="container">
+    <div class="row">
+      <div class="review-head col-sm-12">
+        <h4><span>Testimonials</span></h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati nobis sequi, velit, quasi voluptatem vitae, itaque delectus assumenda quisquam sit quae numquam amet rem? Omnis nesciunt magnam suscipit hic iste?</p>
+      </div>
+      
+      <% if (reviews && reviews.length > 0) { %>
+        <% reviews.forEach(function(review, index) { %>
+          <div class="col-lg-6 mt-4" style="max-width: 50%;">
+            <div class="member d-flex algin-items-start">
+              <div class="info">
+                <h4><%= review.email %></h4>
+                <span>Rating: <%= review.rating %> Star</span>
+                <p style="word-break: break-all;"><%= review.review %></p><br>
+              </div>
+            </div>
+          </div>
+          <% if(index % 2 === 1 && index !== reviews.length - 1) { %>
+            <div class="w-100"></div> <!-- Add a new row after every two reviews -->
+          <% } %>
+        <% }); %>
+      <% } else { %>
+        <p>No Reviews</p>
+      <% } %>
+    </div>
+  </div>
+
+</section>

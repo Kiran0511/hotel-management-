@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="assets/images/favicon.iconnn">
+
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@400;500;700&display=swap">
+
+	
+	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/overlay-scrollbar/css/overlayscrollbars.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/choices/css/choices.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/glightbox/css/glightbox.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/79ffa85eb3.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/admin.css">
+    <script>
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+
+			}
+		})
+		
+	</script>
+
+</head>
+<body>
+    <nav class="navbar sidebar navbar-expand-xl navbar-light">
+		
+		<div class="d-flex align-items-center">
+			<a class="navbar-brand" href="index.html">
+				<img class="light-mode-item navbar-brand-item" src="assets/images/logo.svg" alt="logo">
+				<img class="dark-mode-item navbar-brand-item" src="assets/images/logo-light.svg" alt="logo">
+			</a>
+		</div>
+		
+		
+		<div class="offcanvas offcanvas-start flex-row custom-scrollbar h-100" data-bs-backdrop="true" tabindex="-1" id="offcanvasSidebar">
+			<div class="offcanvas-body sidebar-content d-flex flex-column pt-4">
+	
+				
+				<ul class="navbar-nav flex-column" id="navbar-sidebar">
+					
+					
+					<li class="nav-item"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+					
+					
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="collapse" href="#collapsebooking" role="button" aria-expanded="true" aria-controls="collapsebooking">
+						Bookings
+						</a>
+						
+						<ul class="nav collapse flex-column show" id="collapsebooking" data-bs-parent="#navbar-sidebar">
+							<li class="nav-item"> <a class="nav-link" href="bookinglist.html">Booking List</a></li>
+							<li class="nav-item"> <a class="nav-link active" href="bookingdetail.html">Booking Detail</a></li>
+						</ul>
+					</li>
+	
+					
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="collapse" href="#collapseguest" role="button" aria-expanded="false" aria-controls="collapseguest">
+						Guests
+						</a>
+						
+						<ul class="nav collapse flex-column" id="collapseguest" data-bs-parent="#navbar-sidebar">
+							<li class="nav-item"> <a class="nav-link" href="guestlist.html">Guest List</a></li>
+							<li class="nav-item"> <a class="nav-link" href="guestdetail.html">Guest Detail</a></li>
+						</ul>
+					</li>
+					
+					
+					<li class="nav-item"> <a class="nav-link" href="reviews.html">Reviews</a></li>
+	
+					
+					<li class="nav-item">
+						<a class="nav-link" data-bs-toggle="collapse" href="#collapseauthentication" role="button" aria-expanded="false" aria-controls="collapseauthentication">
+							Authentication
+						</a>
+						
+						<ul class="nav collapse flex-column" id="collapseauthentication" data-bs-parent="#navbar-sidebar">
+							<li class="nav-item"> <a class="nav-link" href="signup.html">Sign Up</a></li>
+							<li class="nav-item"> <a class="nav-link" href="signin.html">Sign In</a></li>
+							<li class="nav-item"> <a class="nav-link" href="forgotpassword.html">Forgot Password</a></li>
+							
+						</ul>
+					</li>
+	
+				</ul>
+				
+	
+				
+				<div class="d-flex align-items-center justify-content-between text-primary-hover mt-auto p-3">
+					<a class="h6 fw-light mb-0 text-body" href="signin.html" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Sign out">
+						<i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+					</a>
+					<a class="h6 mb-0 text-body" href="admin-settings.html" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Settings">
+						<i class="bi bi-gear-fill"></i>
+					</a>
+				</div>
+				
+				
+			</div>
+		</div>
+	</nav>
+	
+	
+	
+	<div class="page-content">
+	
+		
+		<nav class="navbar top-bar navbar-light py-0 py-xl-3">
+			<div class="container-fluid p-0">
+				<div class="d-flex align-items-center w-100">
+	
+					
+					<div class="d-flex align-items-center d-xl-none">
+						<a class="navbar-brand" href="index.html">
+							<img class="navbar-brand-item h-40px" src="assets/images/logo-icon.svg" alt="">
+						</a>
+					</div>
+					
+	
+					
+					<div class="navbar-expand-xl sidebar-offcanvas-menu">
+						<button class="navbar-toggler me-auto p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar" aria-expanded="false" aria-label="Toggle navigation" data-bs-auto-close="outside">
+							<i class="bi bi-list text-primary fa-fw" data-bs-target="#offcanvasMenu"></i>
+						</button>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+		</nav>
+		
+	
+		
+		<div class="page-content-wrapper p-xxl-4">
+	
+			
+			<div class="row">
+				<div class="col-12 mb-4 mb-sm-5">
+					<div class="d-sm-flex justify-content-between align-items-center">
+						<h1 class="h3 mb-2 mb-sm-0">Standard Rooms</h1>
+						<a href="#" class="btn btn-primary-soft text-nowrap mb-0"><i class="bi bi-pencil-square fa-fw"></i> Edit Room</a>						
+					</div>
+				</div>
+			</div>
+
+			
+			<div class="row g-4 g-xl-5">
+				
+				<div class="col-xxl-6">
+					<div class="row g-2 g-sm-4">
+						<div class="col-6">
+							<a data-glightbox data-gallery="gallery" href="image1.jpg">
+								<div class="card card-element-hover card-overlay-hover overflow-hidden">
+									
+									<img src="image1.jpg" class="rounded-3" alt="">
+									
+									<div class="hover-element w-100 h-100">
+										<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6">
+							<a data-glightbox data-gallery="gallery" href="image2.jpg">
+								<div class="card card-element-hover card-overlay-hover overflow-hidden">
+									
+									<img src="image2.jpg" class="rounded-3" alt="">
+									
+									<div class="hover-element w-100 h-100">
+										<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6">
+							<a data-glightbox data-gallery="gallery" href="image3.jpg">
+								<div class="card card-element-hover card-overlay-hover overflow-hidden">
+									
+									<img src="image3.jpg" class="rounded-3" alt="">
+									
+									<div class="hover-element w-100 h-100">
+										<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="col-6">
+							<a data-glightbox data-gallery="gallery" href="image4.jpg">
+								<div class="card card-element-hover card-overlay-hover overflow-hidden">
+									
+									<img src="image4.jpg" class="rounded-3" alt="">
+									
+									<div class="hover-element w-100 h-100">
+										<i class="bi bi-fullscreen fs-6 text-white position-absolute top-50 start-50 translate-middle bg-dark rounded-1 p-2 lh-1"></i>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				
+				<div class="col-xxl-6">
+					<h4><span class="fw-light">Hotel: </span>Courtyard by Marriott New York</h4>
+					<p class="fw-bold"><i class="bi bi-geo-alt me-2"></i>5855 W Century Blvd, Los Angeles - 90045 </p>
+
+					<p class="mb-4">Tolerably behavior may admit daughters offending her ask own. Praise effect wishes to change way and any wanted. Lively use looked latter regard had. Does he part last</p>
+
+					
+					<div class="row g-4">
+						<div class="col-sm-6 col-md-4">
+							<div class="d-flex align-items-center">
+								<div class="icon-lg bg-primary bg-opacity-10 text-primary rounded-2"><i class="fa-solid fa-bed"></i></div>
+								<div class="ms-2">
+									<small>Type</small>
+									<h6 class="mb-0 mt-1">Dulex Rooms</h6>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-4">
+							<div class="d-flex align-items-center">
+								<div class="icon-lg bg-primary bg-opacity-10 text-primary rounded-2"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+								<div class="ms-2">
+									<small>Side</small>
+									<h6 class="mb-0 mt-1">Left Side</h6>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-4">
+							<div class="d-flex align-items-center">
+								<div class="icon-lg bg-primary bg-opacity-10 text-primary rounded-2"><i class="fa-solid fa-stairs"></i></div>
+								<div class="ms-2">
+									<small>Floor</small>
+									<h6 class="mb-0 mt-1">3rd Floor</h6>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-4">
+							<div class="d-flex align-items-center">
+								<div class="icon-lg bg-primary bg-opacity-10 text-primary rounded-2"><i class="fa-regular fa-clone"></i></div>
+								<div class="ms-2">
+									<small>Size</small>
+									<h6 class="mb-0 mt-1">250 Sqft</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					
+					<div class="bg-light border border-secondary border-opacity-25 p-3 rounded d-inline-block mt-4">
+						<h6 class="small">Current Reservation:</h6>
+						
+						<div class="d-sm-flex align-items-center">
+							
+							<div class="avatar avatar-xs flex-shrink-0">
+								<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+							</div>
+							
+							<h6 class="mb-0 ms-2">Person 1</h6>
+						</div>
+						
+						<div class="hstack gap-4 gap-md-5 flex-wrap mt-2">
+							<div>
+								<small>Check-in:</small>
+								<h6 class="fw-normal mb-0">18 Dec 2022 9:00AM</h6>
+							</div>
+							<div>
+								<small>Check-out:</small>
+								<h6 class="fw-normal mb-0">22 Dec 2022 8:00PM</h6>
+							</div>
+							<div>
+								<small>Total Amount:</small>
+								<h6 class="text-success mb-0">$1528</h6>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
+			
+			<div class="card shadow mt-5">
+				
+				<div class="card-header border-bottom">
+					<h5 class="card-header-title">Bookings</h5>
+				</div>
+				
+
+				
+				<div class="card-body">
+					
+					
+					<div class="bg-light rounded p-3 d-none d-lg-block">
+						<div class="row row-cols-7 g-4">
+							<div class="col"><h6 class="mb-0">Booked by</h6></div>
+							<div class="col"><h6 class="mb-0">Check-in</h6></div>
+							<div class="col"><h6 class="mb-0">Check-out</h6></div>
+							<div class="col"><h6 class="mb-0">Guest</h6></div>
+							<div class="col"><h6 class="mb-0">Amount</h6></div>
+							<div class="col"><h6 class="mb-0">Payment</h6></div>
+							<div class="col"><h6 class="mb-0">Action</h6></div>
+							<div class="col"><h6 class="mb-0">Action</h6></div>
+						</div>
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person 1</h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">18 Dec 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">22 Dec 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">04</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$1025</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-success bg-opacity-10 text-success">Full payment</div>
+						</div>
+
+						
+                        <div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+                        <div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person 3</h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">23 Dec 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">26 Dec 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">03</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$847</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-info bg-opacity-10 text-info">Half payment</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4">
+						<div class="bg-light px-2 py-4 text-center">
+							<h6 class="mb-0">Booking Available (27 Dec to 1 Jan)</h6>
+						</div>
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person 2</h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">2 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">5 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">02</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$900</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-orange bg-opacity-10 text-orange">On Property</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person 9</h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">6 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">10 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">05</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$1458</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-success bg-opacity-10 text-success">Full payment</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person </h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">11 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">14 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">02</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$879</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-info bg-opacity-10 text-info">Half payment</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person </h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">15 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">19 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">04</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$1254</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-success bg-opacity-10 text-success">Full payment</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+					</div>
+
+					
+					<div class="row row-cols-xl-7 align-items-lg-center border-bottom g-4 px-2 py-4">
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Booked by:</small>
+							<div class="d-flex align-items-center">
+								
+								<div class="avatar avatar-xs flex-shrink-0">
+									<img class="avatar-img rounded-circle" src="avatar.png" alt="avatar">
+								</div>
+								
+								<div class="ms-2">
+									<h6 class="mb-0 fw-light">Person 2</h6>
+								</div>
+							</div>
+						</div>	
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-in:</small>
+							<h6 class="mb-0 fw-normal">20 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Check-out:</small>
+							<h6 class="mb-0 fw-normal">25 Jan 2022</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Guests:</small>
+							<h6 class="mb-0 fw-normal">03</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Amount:</small>
+							<h6 class="text-success mb-0">$1080</h6>
+						</div>
+
+						
+						<div class="col">
+							<small class="d-block d-lg-none">Payment:</small>
+							<div class="badge bg-success bg-opacity-10 text-success">Full payment</div>
+						</div>
+
+						
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Accept</a></div>
+						<div class="col"><a href="#" class="btn btn-sm btn-light mb-0">Reject</a></div>
+
+					</div>
+				</div>
+				
+
+				
+				<div class="card-footer pt-0">
+					
+					<div class="d-sm-flex justify-content-sm-between align-items-sm-center">
+						
+						<p class="mb-sm-0 text-center text-sm-start">Showing 1 to 8 of 20 entries</p>
+						
+						<nav class="mb-sm-0 d-flex justify-content-center" aria-label="navigation">
+							<ul class="pagination pagination-sm pagination-primary-soft mb-0">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1">Prev</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item active"><a class="page-link" href="#">2</a></li>
+								<li class="page-item disabled"><a class="page-link" href="#">..</a></li>
+								<li class="page-item"><a class="page-link" href="#">15</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				
+			</div>
+			
+
+		</div>
+		
+	</div>
+	
+    <script src="/admin.js"></script>
+    <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script src="assets/vendor/overlay-scrollbar/js/overlayscrollbars.min.js"></script>
+<script src="assets/vendor/choices/js/choices.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.js"></script>
+
+</body>
+</html>

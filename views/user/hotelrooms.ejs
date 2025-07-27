@@ -1,0 +1,47 @@
+<section class="rooms-section">
+    <div class="container">
+      <div class="row">
+        <div class="room-title">
+          <h1>ROOMS</h1>
+          <p>Hotels typically offer a range of room types to suit the needs and preferences of their guests. Standard rooms are the most common type of room and come with basic amenities such as a bed, bathroom, and TV. Deluxe rooms offer upgraded amenities such as high-end toiletries, plush bedding, and in-room entertainment options. Super deluxe rooms are the most luxurious option, offering exclusive amenities such as private check-in and check-out, dedicated butler or personal assistant service, and private outdoor space. In addition to these room types, hotels may offer suites, family rooms, or specialty rooms such as honeymoon suites or executive suites. Each room type is designed to offer a unique experience and level of comfort to guests.</p>
+        </div>
+  
+        <% rooms.forEach(function(room) { %>
+          <div class="col-lg-4 col-md-6">
+            <div class="room-item p-4">
+              <img src="<%= room.image %>" alt="">
+              <div class="r-text">
+                <h3><%= room.roomname %></h3>
+                <h4><%= room.roomcost %> /Perday</h4>
+                <div class="description">
+                  <h6>Capacity:</h6>
+                  <p>Max <%= room.capacity %> Persons</p>
+                </div>
+                <div class="description">
+                  <h6>Services:</h6>
+                  <p><%= room.services %></p>
+                </div>
+  
+                <% if (user) { %>
+                    <% if (room.action === 'enable') { %> 
+                        <a href="/book/<%= room.roomid %>">
+                      <input type="button" value="Book Now" class="btn btn-primary">
+                    </a>
+                    <% } else { %>
+                        <input disabled type="button" value="Currently Not available" class="btn btn-primary" >                    <% } %>
+                <% } else { %>
+                    <% if (room.action === 'enable') { %> 
+                        <a href="/login">
+                      <input type="button" value="Book Now" class="btn btn-primary">
+                    </a>
+                    <% } else { %>
+                        <input disabled type="button" value="Currently Not available" class="btn btn-primary">                  
+                          <% } %>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </section>

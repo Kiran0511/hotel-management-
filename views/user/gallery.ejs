@@ -1,0 +1,13 @@
+<section>
+    <div class="gallery-container">
+      <div class="gallery-slides">
+        <% gallery.forEach(image => { %>
+          <img src="<%= image.image %>" alt="">
+        <% }) %>
+      </div>
+      <div class="gallery-controls">
+        <button class="prev-btn">&lt;</button>
+        <button class="next-btn">&gt;</button>
+      </div>
+    </div>
+  </section>
